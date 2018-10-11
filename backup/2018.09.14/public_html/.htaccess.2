@@ -1,0 +1,14 @@
+AddHandler fcgid-script .fcgi
+RewriteEngine On
+# Set up static content redirect:
+#RewriteRule static/(.+)$ cdfsite/public/static/$1
+# The following two lines are for FastCGI:
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ cdfcubas.fcgi/$1 [QSA,L]
+#DirectoryIndex hello.html
+
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/cdfcubas/django"
+PassengerBaseURI "/"
+PassengerPython "/home/cdfcubas/virtualenv/django/2.7/bin/python2.7"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END

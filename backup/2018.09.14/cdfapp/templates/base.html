@@ -1,0 +1,60 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>
+		Club de Fútbol Femenino Cubas Féminas
+		{% block title %}
+		{% endblock %}
+	</title>
+	<!--
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	-->
+	<link href="/static/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/static/font-awesome/5.0.13/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/static/cdfcubas.css" type="text/css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	{% block header %}
+	{% endblock %}
+
+	{% include 'navbar.html' %}
+	
+	<div class="container-fluid text-center" style="margin-top:75px;">    
+		<div class="row content">
+			<div class="col-xl-1 sidenav">
+				{% block left %}
+				{% endblock %}
+			</div>
+			<div class="col-xl-9 text-left"> 
+				{% block content %}
+				{% endblock %}
+			</div>
+			<div class="col-xl-2 sidenav">
+				{% block right %}
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+
+	{% include 'footer.html' %}
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+</body>
+</html>

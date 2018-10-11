@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block left %}
+{% endblock %}
+
+{% block content %}
+		<h1 style="font-family: 'Lobster';"><br>Cont&aacute;ctanos</h1>
+		<p class="text-justify">Puedes contactar con nosotros a trav&eacute;s de los siguientes medios: </p>
+		<ul>
+			<li class="text-justify">Llam&aacute;ndonos al tel&eacute;fono <a href="tel:692276298"><span class="fas fa-phone"></span><strong> 692276298</strong></a></li><br>
+			<li class="text-justify">Escribi&eacute;ndonos un correo a la direcci&oacute;n <a href="mailto:info@cdfcubasfeminas.com"><span class="fas fa-envelope"></span><strong> info@cdfcubasfeminas.com</strong></a></li><br>
+			<li class="text-justify">Dej&aacute;ndonos tus datos, en breve nosotros nos pondremos en contacto contigo </li><br>
+		</ul>
+		  
+		<form method="post" class="post-form">{% csrf_token %}
+			{{ form.as_p }}
+			<button type="submit" class="save btn btn-default">Save</button>
+		</form>
+
+{% endblock %}
+
+
+{% block right %}
+{% include 'sponsors.html' %}
+{% endblock %}
+

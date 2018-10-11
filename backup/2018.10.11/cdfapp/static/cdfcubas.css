@@ -1,0 +1,23 @@
+.navbar .navbar-nav .nav-item .nav-link {
+	font-family: 'Lobster';
+	color: black;
+}
+.navbar .navbar-brand {
+	font-family: 'Lobster';
+	color: black;
+}
+.navbar {
+	background-color: #C6016A;
+}
+
+.carousel .carousel-inner .carousel-item img {
+	width: 100%;
+	heigh: 100%;
+}
+
+.mySponsors {
+	font-family: 'Lobster';
+}
+.myNews {
+	font-family: 'Lobster';
+}
