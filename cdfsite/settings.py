@@ -25,7 +25,7 @@ SECRET_KEY = '205-!e(rs921w$#4$1@%t^2llpf7erma6vr!h5m$ia(-q+!q@e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gonson.pythonanywhere.com']
 
 
 # Application definition
@@ -84,10 +84,10 @@ WSGI_APPLICATION = 'cdfsite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cdfcubasfeminas',
-        'USER': 'root',
-        'PASSWORD': 'gonson',
-        'HOST': 'localhost',
+        'NAME': 'gonson$cdfcubasfeminas',
+        'USER': 'gonson',
+        'PASSWORD': 'gonza1965',
+        'HOST': 'gonson.mysql.pythonanywhere-services.com',
         'PORT': '3306',
     }
 }

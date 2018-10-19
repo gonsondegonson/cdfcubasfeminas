@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="text-justify">
-		<h1 style="font-family: 'Lobster';"><br>Cont&aacute;ctanos</h1>
+		<h1 style="font-family: 'Lobster';"><br>Cont&aacute;ctanos</h1><br>
 		<p>Puedes contactar con nosotros a trav&eacute;s de los siguientes medios: </p>
 		<ul>
 			<li>Llam&aacute;ndonos al tel&eacute;fono <a href="tel:692276298"><span class="fas fa-phone"></span><strong> 692276298</strong></a></li><br>
@@ -14,7 +14,24 @@
 		</ul>
 
 		<form method="post" class="post-form">{% csrf_token %}
-			{{ form.as_p }}
+<!--		{{ form.as_p }} -->
+            {{ form.non_field_errors }}
+            <div class="fieldWrapper">
+                {{ form.subject.errors }}
+                <label for="{{ form.subject.id_for_label }}" style="width:80px">Teléfono:</label>
+                {{ form.phone }}
+            </div>
+            <div class="fieldWrapper">
+                {{ form.message.errors }}
+                <label for="{{ form.message.id_for_label }}" style="width:80px">Correo:</label>
+                {{ form.email }}
+            </div>
+            <div class="fieldWrapper">
+                {{ form.sender.errors }}
+                <label for="{{ form.sender.id_for_label }}" style="width:80px">Mensaje:</label>
+                {{ form.message }}
+            </div>
+            <br>
 			<button type="submit" class="save btn btn-outline-primary">Enviar</button>
 		</form>
 </div>
@@ -23,5 +40,5 @@
 
 
 {% block right %}
-{% include 'sponsors.html' %}
+{% include 'sponsors_col.html' %}
 {% endblock %}

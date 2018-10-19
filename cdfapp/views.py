@@ -1,31 +1,48 @@
-from django.shortcuts import render,redirect
-from django.http import HttpResponse
-from django.template.loader import render_to_string
+from django.shortcuts import render
+from django.core.paginator import Paginator
+#from django.http import HttpResponse
+#from django.template.loader import render_to_string
 from .forms import ContactForm
-from .models import Club, Sponsor, ContactMessage
+from .models import Club, Sponsor, News
 
-#global Club = 1
-
-# Create your views here.
 def home(request):
-    club = Club.objects.get(id=1)
+    club = Club.objects.get(host=request.get_host())
     sponsors = Sponsor.objects.filter(club=club.id)
+    news = News.objects.filter(club=club.id).filter(date_publication__isnull=False)
 
-    return render(request, 'home.html',  {'club': club, 'sponsors': sponsors})
+    paginator = Paginator(news, 2)
+
+    page = request.GET.get('page')
+    newslist = paginator.get_page(page)
+
+    return render(request, 'home.html',  {'club': club, 'sponsors': sponsors, 'news': newslist})
+
+
+def noticias(request):
+    club = Club.objects.get(host=request.get_host())
+    sponsors = Sponsor.objects.filter(club=club.id)
+    news = News.objects.filter(club=club.id)
+
+    paginator = Paginator(news, 2)
+
+    page = request.GET.get('page')
+    newslist = paginator.get_page(page)
+
+    return render(request, 'news.html',  {'club': club, 'sponsors': sponsors, 'news': newslist})
+
 
 def contacto(request):
-
-    club = Club.objects.get(id=1)
+    club = Club.objects.get(host=request.get_host())
     sponsors = Sponsor.objects.filter(club=club.id)
 
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
-            ContactMessage = form.save(commit=False)
-            ContactMessage.club = club
-            ContactMessage.save()
-#            return redirect('/')
-            return HttpResponse(render_to_string('contactmessage_ok.html', {'club': club, 'sponsors': sponsors, 'item': ContactMessage}))
+            contactmessage = form.save(commit=False)
+            contactmessage.club = club
+            contactmessage.save()
+            return render(request, 'contactmessage_ok.html',  {'club': club, 'sponsors': sponsors, 'item': contactmessage})
+#            return HttpResponse(render_to_string('contactmessage_ok.html', {'club': club, 'sponsors': sponsors, 'item': contactmessage}))
     else:
         form = ContactForm()
 

@@ -1,10 +1,10 @@
 from django.db import models
 from django.utils import timezone
 
-# Create your models here.
 class Club(models.Model):
     name = models.CharField(max_length=100)
     title = models.TextField()
+    host = models.CharField(max_length=100, blank=True, null=True)
     image = models.CharField(max_length=100)
     stylesheet = models.CharField(max_length=100)
     instagram_href = models.URLField()
@@ -23,22 +23,33 @@ class Club(models.Model):
     def __str__(self):
         return self.name
 
-#class News(models.Model):
-#    club = models.ForeignKey('Club', on_delete=models.PROTECT)
-#    title = models.CharField(max_length=100)
-#    summary	= models.CharField(max_length=200)
-#    text = models.TextField()
-#    preferential = models.BooleanField(default=False)
-#    author = models.ForeignKey('auth.User', on_delete=models.PROTECT)
-#    date_creation = models.DateTimeField(default=timezone.now)
-#    date_publication = models.DateTimeField(blank=True, null=True)
+    class Meta:
+        indexes = [
+            models.Index(fields=['host']),
+        ]
 
-#    def publish(self):
-#        self.date_publication = timezone.now()
-#        self.save()
+class News(models.Model):
+    club = models.ForeignKey('Club', on_delete=models.PROTECT)
+    title = models.CharField(max_length=100)
+    summary	= models.CharField(max_length=200)
+    text = models.TextField()
+    image = models.CharField(max_length=100, blank=True, null=True)
+    preferential = models.BooleanField(default=False)
+    author = models.ForeignKey('auth.User', on_delete=models.PROTECT)
+    date_creation = models.DateTimeField(default=timezone.now)
+    date_publication = models.DateTimeField(blank=True, null=True)
 
-#    def __str__(self):
-#        return self.title
+    def publish(self):
+        self.date_publication = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.title
+
+#    class Meta:
+#        indexes = [
+#            models.Index(fields=['club', 'date_publication']),
+#        ]
 
 class Sponsor(models.Model):
     club = models.ForeignKey(Club, on_delete=models.CASCADE)

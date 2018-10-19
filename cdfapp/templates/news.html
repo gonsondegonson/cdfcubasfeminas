@@ -1,29 +1,35 @@
-{% load static %}
-<div class="myNews">
-	<h3><br>Noticias:<br></h3>
-	<div class="container img-thumbnail">
-		{% for sponsor in sponsosrs %}
-        {{ post }}
-				<a target="_blank" href="{{ sponsor.href }}" data-toggle="tooltip" data-placement="left" title="{{ sponsor.tittle }}">
-					<img src={% static "{{ sponsor.image }}" %}>
-				</a>
-    {% endfor %}
-<!--
-		<a target="_blank" href="https://twitter.com/fontanadecubas" data-toggle="tooltip" data-placement="left" title="tittleaurante La Fontana - Cubas de La Sagra (Madrid)">
-			<img src={% static "images/sponsors/LaFontana.jpg" %}>
-		</a>
-		<a target="_blank" href="https://es-es.facebook.com/The-Irish-Parrot-Tavern-169073816848694/" data-toggle="tooltip" data-placement="left" title="The Irish Parrot Tavern - Griñón (Madrid)">
-			<img src={% static "images/sponsors/TheIrishParrot.jpg" %}>
-		</a>
-		<a target="_blank" href="https://es-la.facebook.com/algomas.peluqueros" data-toggle="tooltip" data-placement="left" title="Peluquería Algo Más - Cubas de La Sagra (Madrid)">
-			<img src={% static "images/sponsors/AlgoMas.jpg" %}>
-		</a>
-		<a target="_blank" href="http://www.infercocinas.es/" data-toggle="tooltip" data-placement="left" title="Infer Cocinas - Cubas de La Sagra (Madrid)">
-			<img src={% static "images/sponsors/InferCocinas.jpg" %}>
-		</a>
-		<a target="_blank" href="https://www.facebook.com/DIKIDIKI1234/?rf=343475129065254" data-toggle="tooltip" data-placement="left" title="Restaurante Diki - Torrejón de La Calzada (Madrid)">
-			<img src={% static "images/sponsors/Diki.jpg" %}>
-		</a>
--->
-	</div>
+{% extends 'base.html' %}
+
+{% block left %}
+{% endblock %}
+
+{% block content %}
+
+{% for new in news %}
+    {{ new.title }}<br>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if news.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ news.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ news.number }} of {{ news.paginator.num_pages }}.
+        </span>
+
+        {% if news.has_next %}
+            <a href="?page={{ news.next_page_number }}">next</a>
+            <a href="?page={{ news.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
 </div>
+
+{% endblock %}
+
+
+{% block right %}
+{% include 'sponsors_col.html' %}
+{% endblock %}
