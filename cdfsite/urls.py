@@ -17,8 +17,6 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include, url
 
-import cdfapp.urls
-
 urlpatterns = [
     url(r'', include('cdfapp.urls')),
     path('admin/', admin.site.urls),

@@ -10,12 +10,6 @@
 		{% block title %}
 		{% endblock %}
 	</title>
-	<!--
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-	-->
 	<link href="/static/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/static/font-awesome/5.0.13/css/fontawesome-all.css" rel="stylesheet">
 	<link href="{{ club.stylesheet }}" type="text/css" rel="stylesheet">
@@ -29,53 +23,12 @@
 	{% block header %}
 	{% endblock %}
 
-	<nav class="navbar navbar-expand-sm fixed-top navbar-dark">
-		<a class="navbar-brand" href="/" title="{{ club.name }}">
-			<img style="width:40px;" src="{{ club.image }}" alt="Escudo">
-		</a>
-		<a class="navbar-brand" href="/">{{ club.name }}</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="myNavbar">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item ml-5"><a class="nav-link" href="/"><span class="fas fa-home"></span> Inicio</a></li>
-			<li class="nav-item ml-5"><a class="nav-link" href="{% url 'noticias' %}"><span class="fas fa-newspaper"></span> Noticias</a></li>
-			<li class="nav-item ml-5"><a class="nav-link" href="#"><span class="fas fa-university"></span> Club</a></li>
-			<li class="nav-item dropdown ml-5">
-				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><span class="fas fa-futbol"> Equipos</span></a>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#"><span class="fas fa-users"> Plantilla</a>
-					<a class="dropdown-item" href="#"><span class="fas fa-user-graduate"> Entrenadores</a>
-					<a class="dropdown-item" href="#"><span class="fas fa-calendar-alt"> Calendario</a>
-					<a class="dropdown-item" href="#"><span class="fas fa-table"> Clasificación</a>
-				</div>
-			</li>
-			<li class="nav-item ml-5"><a class="nav-link" href="#"><span class="fas fa-building"></span> Instalaciones</a></li>
-			<li class="nav-item ml-5"><a class="nav-link" href="#"><span class="fas fa-images"></span> Galería</a></li>
-			<li class="nav-item ml-5"><a class="nav-link" href="{% url 'contacto' %}"><span class="fas fa-envelope"></span> Contacto</a></li>
-		</ul>
-	<!--
-		<form class="form-inline" action="#">
-			<div class="input-group">
-				<input class="form-control mr-sm-2" type="text" placeholder="Buscar...">
-				<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-			</div>
-		</form>
-	-->
-		<ul class="navbar-nav">
-			<li class="nav-item"><a class="nav-link" href="/admin"><span class="fas fa-sign-in-alt"></span>  Admin</a></li>
-		</ul>
-		</div>
-	</nav>
+	{% block navbar %}
+	{% endblock %}
 
 	<div class="container-fluid text-center" style="margin-top:75px;">
 		<div class="row content">
-			<div class="col-xl-2 sidenav">
-				{% block left %}
-				{% endblock %}
-			</div>
-			<div class="col-xl-8 text-left">
+			<div class="col-xl-10 text-left">
 				{% block content %}
 				{% endblock %}
 			</div>
@@ -86,32 +39,13 @@
 		</div>
 	</div>
 
-	<footer class="footer">
-		<nav class="navbar navbar-expand-sm fixed-bottom navbar-dark">
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myFooter">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="myFooter">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" href="{{ club.instagram_href }}" data-toggle="tooltip" data-placement="top" title="{{ club.instagram_text }}" target="_blank"><span class="fab fa-instagram"></span></a></li>
-					<li class="nav-item"><a class="nav-link" href="{{ club.facebook_href }}"  data-toggle="tooltip" data-placement="top" title="{{ club.facebook_text }}"  target="_blank"><span class="fab fa-facebook-f"></span></a></li>
-					<li class="nav-item"><a class="nav-link" href="{{ club.twitter_href }}"   data-toggle="tooltip" data-placement="top" title="{{ club.twitter_text }}"   target="_blank"><span class="fab fa-twitter"></span></a></li>
-					<li class="nav-item"><a class="nav-link" href="{{ club.google_href }}"    data-toggle="tooltip" data-placement="top" title="{{ club.google_text }}"    target="_blank"><span class="fab fa-google-plus-g"></span></a></li>
-					<li class="nav-item"><a class="nav-link" href="{{ club.youtube_href }}"   data-toggle="tooltip" data-placement="top" title="{{ club.youtube_text }}"   target="_blank"><span class="fab fa-youtube"></span></a></li>
-					<li class="nav-item"><a class="nav-link" href="mailto:{{ club.sendmail_href }}"  data-toggle="tooltip" data-placement="top" title="{{ club.sendmail_text }}"  target="_blank"><span class="fas fa-envelope"></span></a></li>
-				</ul>
-        		<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="mailto:gonson@hotmail.com"  data-toggle="tooltip" data-placement="top" title="Contacta con el diseñador"  target="_blank"><span class="far fa-copyright"></span>  Designed by Gonson</a></li>
-        		</ul>
-			</div>
-		</nav   >
-	</footer  >
+	{% block footer %}
+	{% endblock %}
 
 	<script>
 	$(document).ready(function(){
 	    $('[data-toggle="tooltip"]').tooltip();
 	});
 	</script>
-
 </body>
 </html>

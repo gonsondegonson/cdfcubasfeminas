@@ -117,7 +117,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 #TIME_ZONE = 'UTC'
-TIME_ZONE = 'Europe/Berlin'
+TIME_ZONE = 'Europe/Madrid'
+DATE_FORMAT = "d/m/Y"
 
 USE_I18N = True
 

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>
+		{{ club.title }}
+		{% block title %}
+		{% endblock %}
+	</title>
+	<link href="/static/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/static/font-awesome/5.0.13/css/fontawesome-all.css" rel="stylesheet">
+	<link href="{{ club.stylesheet }}" type="text/css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="/static/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+            	<h3><br><center>Noticias: </center></h3>
+            <div class="container img-thumbnail">
+            {% for new in news %}
+                {% if new.id == current.id %}
+            		<a>{{ new.date_publication|date:'d/m/Y' }} - {{ new.title }}</a><br>
+                {% else %}
+            		<a href="{% url 'news' %}?Id={{ new.id }}">{{ new.date_publication|date:'d/m/Y' }} - {{ new.title }}</a><br>
+                {% endif %}
+            {% endfor %}
+            </div>
+<!--
+    ATENCION: Pagination no funciona bien, se introduce un mecanismo para no mostrar la última página.
+    Eliminar este mecanismo cuando funcione bien.
+-->
+            <nav aria-label="News Navigation">
+                <ul class="pagination justify-content-center">
+                    {% if news.has_previous == True %}
+                        <li class="page-item"><a class="page-link" href="?page=1" tabindex="-1" data-toggle="tooltip" title="Primera">&lt&lt</a><li>
+                        <li class="page-item"><a class="page-link" href="?page={{ news.previous_page_number }}" tabindex="-1" data-toggle="tooltip" title="Anterior">&lt</a><li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link">&lt&lt</a><li>
+                        <li class="page-item disabled"><a class="page-link">&lt</a><li>
+                    {% endif %}
+                    <li class="page-item disabled"><a class="page-link">{{ news.number }} de {{ news.paginator.num_pages }}</a></li>
+                    {% if news.has_next == True %}
+                        <li class="page-item"><a class="page-link" href="?page={{ news.next_page_number }}" data-toggle="tooltip" title="Siguiente">&gt</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ news.paginator.num_pages }}" data-toggle="tooltip" title="Ultima">&gt&gt</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link">&gt</a></li>
+                        <li class="page-item disabled"><a class="page-link">&gt&gt</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+<li>news.has_previous: {{ news.has_previous }}</li>
+<li>news.has_next: {{ news.has_next }}</li>
+<li>news.number: {{ news.number }}</li>
+</body>

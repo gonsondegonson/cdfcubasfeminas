@@ -1,39 +1,36 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
-#from django.http import HttpResponse
-#from django.template.loader import render_to_string
+
+from .functions import GetRequestId, GetObjectId
 from .forms import ContactForm
-from .models import Club, Sponsor, News
+from .models import  Club, News, Gallery
 
 def home(request):
     club = Club.objects.get(host=request.get_host())
-    sponsors = Sponsor.objects.filter(club=club.id)
-    news = News.objects.filter(club=club.id).filter(date_publication__isnull=False)
+    news = News.objects.filter(club=club.id, preferential=True, date_publication__isnull=False)
 
     paginator = Paginator(news, 2)
 
     page = request.GET.get('page')
-    newslist = paginator.get_page(page)
+    news_page = paginator.get_page(page)
 
-    return render(request, 'home.html',  {'club': club, 'sponsors': sponsors, 'news': newslist})
+    return render(request, 'home.html',  {'club': club, 'news': news_page})
 
-
-def noticias(request):
+def news(request):
     club = Club.objects.get(host=request.get_host())
-    sponsors = Sponsor.objects.filter(club=club.id)
-    news = News.objects.filter(club=club.id)
+    news = News.objects.filter(club=club.id).order_by('-date_publication').filter(date_publication__isnull=False)
 
-    paginator = Paginator(news, 2)
+    id = GetRequestId(request)
+    current = GetObjectId(id, news)
 
-    page = request.GET.get('page')
-    newslist = paginator.get_page(page)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(news, 3)
+    news_page = paginator.get_page(page)
 
-    return render(request, 'news.html',  {'club': club, 'sponsors': sponsors, 'news': newslist})
+    return render(request, 'news.html',  {'club': club, 'news': news_page, 'current': current})
 
-
-def contacto(request):
+def contact(request):
     club = Club.objects.get(host=request.get_host())
-    sponsors = Sponsor.objects.filter(club=club.id)
 
     if request.method == "POST":
         form = ContactForm(request.POST)
@@ -41,9 +38,24 @@ def contacto(request):
             contactmessage = form.save(commit=False)
             contactmessage.club = club
             contactmessage.save()
-            return render(request, 'contactmessage_ok.html',  {'club': club, 'sponsors': sponsors, 'item': contactmessage})
-#            return HttpResponse(render_to_string('contactmessage_ok.html', {'club': club, 'sponsors': sponsors, 'item': contactmessage}))
+            return render(request, 'contactmessage_ok.html',  {'club': club, 'item': contactmessage})
     else:
         form = ContactForm()
 
-    return render(request, 'contactmessage.html', {'form': form, 'club': club, 'sponsors': sponsors})
+    return render(request, 'contactmessage.html', {'form': form, 'club': club})
+
+def photogallery(request):
+    club = Club.objects.get(host=request.get_host())
+    galleries = Gallery.objects.filter(club=club.id, gallery_type='PH').order_by('-date')
+
+    id = GetRequestId(request)
+    current = GetObjectId(id, galleries)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(galleries, 2)
+
+    gallery_page = paginator.get_page(page)
+
+    return render(request, 'photogallery.html',  {'club': club, 'galleries': gallery_page, 'current': current})
+
+#    raise Exception('Objeto' + str(current.id))

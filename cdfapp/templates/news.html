@@ -1,35 +1,57 @@
-{% extends 'base.html' %}
-
-{% block left %}
-{% endblock %}
+{% extends 'base1.html' %}
 
 {% block content %}
+<div class="row content">
+    <div class="col-xl-3 sidenav">
+        <div class="myNews">
+        	<h3><br><center>Noticias:</center></h3>
+            <div class="container img-thumbnail">
+            {% for new in news %}
+                {% if new.id == current.id %}
+            		<a>{{ new.date_publication|date:'d/m/Y' }} - {{ new.title }}</a><br>
+                {% else %}
+            		<a href="{% url 'news' %}?page={{ news.number }}&Id={{ new.id }}">{{ new.date_publication|date:'d/m/Y' }} - {{ new.title }}</a><br>
+                {% endif %}
+            {% endfor %}
+            </div>
 
-{% for new in news %}
-    {{ new.title }}<br>
-{% endfor %}
+            <nav aria-label="News Navigation">
+                <ul class="pagination justify-content-center">
+                    {% if news.has_previous == True %}
+                        <li class="page-item"><a class="page-link" href="?page=1&Id={{ current.id }}" tabindex="-1" data-toggle="tooltip" title="Primera página"><span class="fas fa-angle-double-left"></span></a><li>
+                        <li class="page-item"><a class="page-link" href="?page={{ news.previous_page_number }}&Id={{ current.id }}" tabindex="-1" data-toggle="tooltip" title="Página anterior"><span class="fas fa-angle-left"></span></a><li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link"><span class="fas fa-angle-double-left"></span></a><li>
+                        <li class="page-item disabled"><a class="page-link"><span class="fas fa-angle-left"></span></a><li>
+                    {% endif %}
+                    <li class="page-item"><a class="page-link" data-toggle="tooltip" title="Página {{ news.number }} de {{ news.paginator.num_pages }} páginas en total">{{ news.number }} de {{ news.paginator.num_pages }}</a></li>
+                    {% if news.has_next == True %}
+                        <li class="page-item"><a class="page-link" href="?page={{ news.next_page_number }}&Id={{ current.id }}" data-toggle="tooltip" title="Página siguiente"><span class="fas fa-angle-right"></span></a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ news.paginator.num_pages }}&Id={{ current.id }}" data-toggle="tooltip" title="Ultima página"><span class="fas fa-angle-double-right"></span></a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link"><span class="fas fa-angle-right"></span></a></li>
+                        <li class="page-item disabled"><a class="page-link"><span class="fas fa-angle-double-right"></span></a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="col-xl-9 text-left">
+    <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fab fa-facebook-f fa-3x social"></i></a>
+    <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fab fa-instagram fa-3x social"></i></a>
+    <a href="https://twitter.com/bootsnipp"><i id="social-tw" class="fab fa-twitter fa-3x social"></i></a>
+    <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fab fa-google-plus-g fa-3x social"></i></a>
+    <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fab fa-youtube fa-3x social"></i></a>
+    <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fas fa-envelope fa-3x social"></i></a>
 
-<div class="pagination">
-    <span class="step-links">
-        {% if news.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ news.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ news.number }} of {{ news.paginator.num_pages }}.
-        </span>
-
-        {% if news.has_next %}
-            <a href="?page={{ news.next_page_number }}">next</a>
-            <a href="?page={{ news.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
+        <div class="myNew">
+        	<h2><br><center>{{ current.date_publication|date:'d/m/Y' }} - {{ current.title }}</center></h2>
+        	<div class="container">
+        	    <br>
+    			<h5 class="text-justify"><strong>{{ current.summary }}</strong></h5><br>
+                <div><img style="float: left;width:200px;"src="{{ current.image }}"/>{{ current.html_text }}</div>
+        	</div>
+        </div>
+    </div>
 </div>
-
-{% endblock %}
-
-
-{% block right %}
-{% include 'sponsors_col.html' %}
 {% endblock %}

@@ -1,0 +1,21 @@
+from django.utils.datastructures import MultiValueDictKeyError
+
+def GetRequestId(request):
+
+    try:
+        id = int(request.GET["Id"])
+    except MultiValueDictKeyError:
+        id = 0;
+
+    return id
+
+def GetObjectId(id, collection):
+
+    if id == 0:
+        current = collection[0]
+    else:
+        for current in collection:
+            if (current.id == id):
+                break
+
+    return current

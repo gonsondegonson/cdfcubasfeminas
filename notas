@@ -1,7 +1,28 @@
+Posicionamiento en Google:
+--------------------------
 https://www.google.com/ping?sitemap=http://www.cdfcubasfeminas.com
-
 http://www.google.com/webmasters/tools/
-
 https://www.google.com/webmasters/tools/submit-url?pli=1
-
 https://searchengineland.com/guide/what-is-seo
+
+Sentencias sql:
+---------------
+from django.db import connection
+print (connection.queries)
+
+print (Club.objects.filter(id=1).select_related().query)
+
+------------------------------------------------------
+class Modelo1(models.Model):
+    nombre = models.CharField(max_length=30)
+
+class Modelo2(models.Model):
+    descripcion = models.CharField(max_length=30)
+    mod1 = models.ForeignKey(Modelo1, on_delete=models.CASCADE)
+
+class Modelo3(models.Model):
+    altura = models.CharField(max_length=30)
+    mod2 = models.ForeignKey(Modelo2, on_delete=models.CASCADE)
+
+mod3 = Modelo3.objects.filter(mod2__mod1__nombre = "Rodrigo") # Hace un join de las 3 tablas y deja solo los que tiene un nombre igual a "Rodrigo"
+------------------------------------------------------
