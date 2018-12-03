@@ -9,12 +9,10 @@ def home(request):
     club = Club.objects.get(host=request.get_host())
     news = News.objects.filter(club=club.id, preferential=True, date_publication__isnull=False)
 
-    paginator = Paginator(news, 2)
+    id = GetRequestId(request)
+    current = GetObjectId(id, news)
 
-    page = request.GET.get('page')
-    news_page = paginator.get_page(page)
-
-    return render(request, 'home.html',  {'club': club, 'news': news_page})
+    return render(request, 'home.html',  {'club': club, 'news': news, 'current': current})
 
 def news(request):
     club = Club.objects.get(host=request.get_host())
@@ -52,7 +50,7 @@ def photogallery(request):
     current = GetObjectId(id, galleries)
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(galleries, 2)
+    paginator = Paginator(galleries, 10)
 
     gallery_page = paginator.get_page(page)
 

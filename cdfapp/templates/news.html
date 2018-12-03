@@ -37,21 +37,7 @@
         </div>
     </div>
     <div class="col-xl-9 text-left">
-    <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fab fa-facebook-f fa-3x social"></i></a>
-    <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fab fa-instagram fa-3x social"></i></a>
-    <a href="https://twitter.com/bootsnipp"><i id="social-tw" class="fab fa-twitter fa-3x social"></i></a>
-    <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fab fa-google-plus-g fa-3x social"></i></a>
-    <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fab fa-youtube fa-3x social"></i></a>
-    <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fas fa-envelope fa-3x social"></i></a>
-
-        <div class="myNew">
-        	<h2><br><center>{{ current.date_publication|date:'d/m/Y' }} - {{ current.title }}</center></h2>
-        	<div class="container">
-        	    <br>
-    			<h5 class="text-justify"><strong>{{ current.summary }}</strong></h5><br>
-                <div><img style="float: left;width:200px;"src="{{ current.image }}"/>{{ current.html_text }}</div>
-        	</div>
-        </div>
+        {% include 'new.html' %}
     </div>
 </div>
 {% endblock %}

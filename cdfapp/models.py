@@ -59,18 +59,6 @@ class Club(models.Model):
     host = models.CharField(max_length=100, blank=True, null=True)
     image = models.CharField(max_length=100)
     stylesheet = models.CharField(max_length=100)
-    instagram_href = models.URLField()
-    instagram_text = models.CharField(max_length=100)
-    facebook_href = models.URLField()
-    facebook_text = models.CharField(max_length=100)
-    twitter_href = models.URLField()
-    twitter_text = models.CharField(max_length=100)
-    google_href = models.URLField()
-    google_text = models.CharField(max_length=100)
-    youtube_href = models.URLField()
-    youtube_text = models.CharField(max_length=100)
-    sendmail_href = models.EmailField()
-    sendmail_text = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -189,6 +177,15 @@ class GalleryObject(models.Model):
 
     def __str__(self):
         return self.image
+
+class Team(models.Model):
+    season = models.ForeignKey('Season', on_delete=models.PROTECT)
+    club = models.ForeignKey('Club', on_delete=models.PROTECT)
+    age = models.ForeignKey('Age', on_delete=models.PROTECT)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 class Social(models.Model):
     name = models.CharField(max_length=100)

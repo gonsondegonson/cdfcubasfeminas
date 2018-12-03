@@ -5,12 +5,6 @@
 		</button>
 		<div class="collapse navbar-collapse" id="myFooter">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link" href="{{ club.instagram_href }}" data-toggle="tooltip" data-placement="top" title="{{ club.instagram_text }}" target="_blank"><span class="fab fa-instagram"></span></a></li>
-				<li class="nav-item"><a class="nav-link" href="{{ club.facebook_href }}"  data-toggle="tooltip" data-placement="top" title="{{ club.facebook_text }}"  target="_blank"><span class="fab fa-facebook-f"></span></a></li>
-				<li class="nav-item"><a class="nav-link" href="{{ club.twitter_href }}"   data-toggle="tooltip" data-placement="top" title="{{ club.twitter_text }}"   target="_blank"><span class="fab fa-twitter"></span></a></li>
-				<li class="nav-item"><a class="nav-link" href="{{ club.google_href }}"    data-toggle="tooltip" data-placement="top" title="{{ club.google_text }}"    target="_blank"><span class="fab fa-google-plus-g"></span></a></li>
-				<li class="nav-item"><a class="nav-link" href="{{ club.youtube_href }}"   data-toggle="tooltip" data-placement="top" title="{{ club.youtube_text }}"   target="_blank"><span class="fab fa-youtube"></span></a></li>
-				<li class="nav-item"><a class="nav-link" href="mailto:{{ club.sendmail_href }}"  data-toggle="tooltip" data-placement="top" title="{{ club.sendmail_text }}"  target="_blank"><span id="social-gp" class="fas fa-envelope"></span></a></li>
             {% for social in club.social %}
 				<li class="nav-item"><a class="nav-link" href="{{ social.href }}" data-toggle="tooltip" data-placement="top" title="{{ social.text }}" target="_blank"><span class="{{ social.social.icon }}"></span></a></li>
             {% endfor %}

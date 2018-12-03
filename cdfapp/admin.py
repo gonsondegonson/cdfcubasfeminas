@@ -19,10 +19,10 @@ admin.site.register(Season, SeasonAdmin)
 
 class ClubSocialInline(admin.TabularInline):
     model = ClubSocial
-    extra = 6
+    extra = 1
 class SponsorInline(admin.TabularInline):
     model = Sponsor
-    extra = 10
+    extra = 1
 
 class ClubAdmin(admin.ModelAdmin):
 #    fields = ['name', 'title']
@@ -30,12 +30,6 @@ class ClubAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,      {'fields': ['name', 'title','host']}),
         ('Estilo',  {'fields': ['image', 'stylesheet']}),
-        ('Correo',  {'fields': ['sendmail_href', 'sendmail_text']}),
-        ('Redes',   {'fields': ['instagram_href', 'instagram_text',
-                                'facebook_href', 'facebook_text',
-                                'twitter_href', 'twitter_text',
-                                'google_href', 'google_text',
-                                'youtube_href', 'youtube_text']}),
     ]
     inlines = [ClubSocialInline, SponsorInline]
 
@@ -58,7 +52,7 @@ admin.site.register(News, NewsAdmin)
 
 class GalleryObjectInline(admin.TabularInline):
     model = GalleryObject
-    extra = 10
+    extra = 1
 
 class GalleryAdmin(admin.ModelAdmin):
     list_display = ('club','date', 'title','gallery_type')
@@ -68,7 +62,7 @@ admin.site.register(Gallery, GalleryAdmin)
 
 class PeopleSocialInline(admin.TabularInline):
     model = PeopleSocial
-    extra = 3
+    extra = 1
 
 class PeopleAdmin(admin.ModelAdmin):
     list_display = ('nick','name', 'surname','birth_date')

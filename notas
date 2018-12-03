@@ -26,3 +26,41 @@ class Modelo3(models.Model):
 
 mod3 = Modelo3.objects.filter(mod2__mod1__nombre = "Rodrigo") # Hace un join de las 3 tablas y deja solo los que tiene un nombre igual a "Rodrigo"
 ------------------------------------------------------
+
+Iconos:
+--------
+    <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fab fa-facebook-f fa-3x social"></i></a>
+    <a href="https://www.facebook.com/bootsnipp"><i id="social-fb" class="fab fa-instagram fa-3x social"></i></a>
+    <a href="https://twitter.com/bootsnipp"><i id="social-tw" class="fab fa-twitter fa-3x social"></i></a>
+    <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fab fa-google-plus-g fa-3x social"></i></a>
+    <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fab fa-youtube fa-3x social"></i></a>
+    <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fas fa-envelope fa-3x social"></i></a>
+
+
+
+GitHub:
+--------
+git init
+git config --global user.name "Tu nombre"
+git config --global user.email tu@ejemplo.com
+vi .gitignore
+    *.pyc
+    *~
+    __pycache__
+    myvenv
+    db.sqlite3
+    /static
+    .DS_Store
+
+git status
+git add --all .
+git status
+git commit -m "Cambie el HTML para la página."
+git push
+
+git remote add origin https://github.com/gonsondegonson/cdfcubasfeminas.git
+git push -u origin master
+
+cd ~/<your-pythonanywhere-username>.pythonanywhere.com
+git pull
+
