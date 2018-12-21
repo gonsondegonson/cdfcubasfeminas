@@ -1,0 +1,51 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="row content">
+    <div class="col-xl-3 sidenav">
+        <div class="myGallery">
+        	<h3><br><center>Galerías de Vídeos:</center></h3>
+            <div class="container img-thumbnail">
+            {% for gallery in galleries %}
+                {% if gallery.id == current.id %}
+            		<a>{{ gallery.date|date:'d/m/Y' }} - {{ gallery.title }}</a><br>
+                {% else %}
+            		<a href="{% url 'photogallery' %}?page={{ galleries.number }}&Id={{ gallery.id }}">{{ gallery.date|date:'d/m/Y' }} - {{ gallery.title }}</a><br>
+                {% endif %}
+            {% endfor %}
+            </div>
+            <nav aria-label="Photos Navigation">
+                <ul class="pagination justify-content-center">
+                    {% if galleries.has_previous == True %}
+                        <li class="page-item"><a class="page-link" href="?page=1&Id={{ current.id }}" tabindex="-1" data-toggle="tooltip" title="Primera página"><span class="fas fa-angle-double-left"></span></a><li>
+                        <li class="page-item"><a class="page-link" href="?page={{ galleries.previous_page_number }}&Id={{ current.id }}" tabindex="-1" data-toggle="tooltip" title="Página anterior"><span class="fas fa-angle-left"></span></a><li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link"><span class="fas fa-angle-double-left"></span></a><li>
+                        <li class="page-item disabled"><a class="page-link"><span class="fas fa-angle-left"></span></a><li>
+                    {% endif %}
+                    <li class="page-item"><a class="page-link" data-toggle="tooltip" title="Página {{ galleries.number }} de {{ galleries.paginator.num_pages }} páginas en total">{{ galleries.number }}  de  {{ galleries.paginator.num_pages }}</a></li>
+                    {% if galleries.has_next == True %}
+                        <li class="page-item"><a class="page-link" href="?page={{ galleries.next_page_number }}&Id={{ current.id }}" data-toggle="tooltip" title="Página siguiente"><span class="fas fa-angle-right"></span></a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ galleries.paginator.num_pages }}&Id={{ current.id }}" data-toggle="tooltip" title="Ultima página"><span class="fas fa-angle-double-right"></span></a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link"><span class="fas fa-angle-right"></span></a></li>
+                        <li class="page-item disabled"><a class="page-link"><span class="fas fa-angle-double-right"></span></a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="col-xl-9 text-left">
+        <div class="myPhotoGallery">
+        	<h3><br><center>{{ current.date|date:'d/m/Y' }} - {{ current.title }}:</center></h3>
+        	<div class="container">
+            {% for object in current.galleryobjects %}
+        		<a target="myPhotoGallery" class="nav-item" href="{{ current.href }}{{ object.href }}" data-toggle="tooltip" title="{{ object.title }}">
+        			<img class="img-thumbnail" src="{{ current.image }}{{ object.image }}">
+        		</a>
+            {% endfor %}
+        	</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

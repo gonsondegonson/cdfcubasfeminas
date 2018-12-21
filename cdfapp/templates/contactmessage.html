@@ -1,4 +1,4 @@
-{% extends 'base1.html' %}
+    {% extends 'base1.html' %}
 
 {% block content %}
 <div class="container-fluid text-center">
@@ -7,12 +7,18 @@
         </div>
         <div class="col-xl-10 text-left">
             <div class="myContactMessage text-justify">
-                <h1><br>Contáctanos</h1><br>
-                <h5>Puedes contactar con nosotros a través de los siguientes medios: </h5><br>
+                <h1>Contáctanos</h1>
+                <h5><br>Puedes contactar con nosotros a través de los siguientes medios: </h5>
                 <ul>
-                    <li>Llamándonos al teléfono <a href="tel:692276298"><span class="fas fa-phone"></span><strong> 692276298</strong></a></li><br>
-                    <li>Escribiéndonos un correo a la dirección <a href="mailto:{{ club.sendmail_href }}"><span class="fas fa-envelope"></span><strong> {{ club.sendmail_href }}</strong></a></li><br>
-                    <li>Dejándonos tus datos, en breve nosotros nos pondremos en contacto contigo </li><br>
+                {% for social in club.social %}
+                    {% if social.social.name == "Telephone" %}
+                    <li>Llamándonos al teléfono <a href="{{ social.href }}"><span class="{{ social.social.icon }}"></span><strong> {{ social.href|slice:"4:" }}</strong></a></li>
+                    {% endif %}
+                    {% if social.social.name == "e-Mail" %}
+                    <li>Escribiéndonos un correo a la dirección <a href="{{ social.href }}"><span class="{{ social.social.icon }}"></span><strong> {{ social.href|slice:"7:" }}</strong></a></li>
+                    {% endif %}
+                {% endfor %}
+                    <li>Dejándonos tus datos, en breve nosotros nos pondremos en contacto contigo: </li>
                 </ul>
                 <form method="post" class="post-form">{% csrf_token %}
                     {{ form.non_field_errors }}
@@ -31,7 +37,6 @@
                         <label for="{{ form.sender.id_for_label }}" style="width:80px">Mensaje:</label>
                         {{ form.message }}
                     </div>
-                    <br>
                     <button type="submit" class="save btn btn-outline-success" data-toggle="tooltip" title="Enviar mensaje de contacto">Enviar</button>
                     <a href="/" role="button" class="save btn btn-outline-info" data-toggle="tooltip" title="Volver a la página principal">Volver</a>
                 </form>

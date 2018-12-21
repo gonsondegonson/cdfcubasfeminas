@@ -2,51 +2,59 @@
 {% load static %}
 
 {% block content %}
-<div class="container-fluid text-center">
-    <div class="row content">
-        <div class="col-xl-1 sidenav">
-        </div>
-        <div class="col-xl-11 text-left">
-            <div class="container-fluid text-center">
-                <div class="row content">
-                    <div class="col-xl-2 sidenav">
-                    </div>
-                    <div class="col-xl-8 text-left">
-                    	<div id="myCarousel" class="carousel slide" data-ride="carousel">
-                    		<ol class="carousel-indicators">
-                                {% for new in news %}
-                    			<li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}" {% if new.id == current.id %} class="active"{% endif %}></li>
-                                {% endfor %}
-                    		</ol>
+<div class="container">
+    <div class="img-thumbnail">
+    	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    		<ol class="carousel-indicators">
+                {% for cover in covers %}
+    			<li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}" {% if forloop.counter0 == 0 %} class="active"{% endif %}></li>
+                {% endfor %}
+    		</ol>
 
-                    		<div class="carousel-inner">
-                                {% for new in news %}
-                    			<div {% if new.id == current.id %}class="carousel-item active"{% else %}class="carousel-item"{% endif %}>
-                    			    <a href="/?Id={{ new.id }}">
-                    				<img class="d-block w-100" src="{{ new.image }}" alt="{{ new.title }}">
-                    				<div class="carousel-caption">
-                    					<h3>{{ new.title }}</h3>
-                    					<h6>{{ new.summary }}</h6>
-                    				</div>
-                    			</div>
-                                {% endfor %}
-                    		</div>
-                    		<a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                    			<span class="carousel-control-prev-icon"></span>
-                    			<span class="sr-only">Anterior</span>
-                    		</a>
-                    		<a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                    			<span class="carousel-control-next-icon"></span>
-                    			<span class="sr-only">Siguiente</span>
-                    		</a>
-                    	</div>
-                    </div>
-                    <div class="col-xl-2 sidenav">
-                    </div>
+    		<div class="carousel-inner">
+                {% for cover in covers %}
+    			<div {% if forloop.counter0 == 0 %}class="carousel-item active"{% else %}class="carousel-item"{% endif %}>
+    			    {% if cover.href is not blank or cover.href is not null %}
+        			    <a href="{{ cover.href }}">
+    			    {% elif cover.news.id > 0 %}
+        			    <a href="{% url 'news' %}?Id={{ cover.news.id }}">
+    			    {% endif %}
+    				<img src="{{ cover.image }}" alt="{{ cover.title }}">
+    			</div>
+                {% endfor %}
+    		</div>
+    		<a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+    			<span class="carousel-control-prev-icon"></span>
+    			<span class="sr-only">Anterior</span>
+    		</a>
+    		<a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+    			<span class="carousel-control-next-icon"></span>
+    			<span class="sr-only">Siguiente</span>
+    		</a>
+    	</div>
+    </div>
+</div>
+
+<div class="myHomeNews">
+	<div class="container">
+    	<h5><br><center>Noticias destacadas:</center></h5>
+    <div class="img-thumbnail">
+        <div class="row">
+            {% for new in news %}
+            <div class="col-md-4">
+                <div class="thumbnail">
+        		    <a href="{% url 'news' %}?Id={{ new.id }}" data-toggle="tooltip" title="{{ new.title }}">
+        			    <img style="width:100%" src="{{ new.image }}">
+                        <div class="caption">
+                            <h5>{{ new.date_publication|date:'d/m/Y - H:m' }} {{ new.title }}</h5>
+                            <p>{{ new.summary }}</p>
+                        </div>
+        		    </a>
                 </div>
             </div>
-    		{% include 'new.html' %}
+            {% endfor %}
         </div>
-    </div>
+	</div>
+	</div>
 </div>
 {% endblock %}

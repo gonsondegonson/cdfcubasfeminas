@@ -83,13 +83,28 @@ class ClubSocial(models.Model):
     def __str__(self):
         return self.href
 
+class Cover(models.Model):
+    club = models.ForeignKey('Club', on_delete=models.PROTECT)
+    image = models.CharField(max_length=100)
+    active = models.BooleanField(default=True)
+    href = models.CharField(max_length=100, blank=True, null=True)
+    news = models.ForeignKey('News', on_delete=models.PROTECT, blank=True, null=True)
+
+    def __str__(self):
+        return ''
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['club', 'active']),
+        ]
+
 class News(models.Model):
     club = models.ForeignKey('Club', on_delete=models.PROTECT)
     title = models.CharField(max_length=100)
     summary	= models.CharField(max_length=200)
     text = models.TextField()
     image = models.CharField(max_length=100, blank=True, null=True)
-    preferential = models.BooleanField(default=False)
+    featured = models.BooleanField(default=False)
     author = models.ForeignKey('auth.User', on_delete=models.PROTECT)
     date_creation = models.DateTimeField(default=timezone.now)
     date_publication = models.DateTimeField(blank=True, null=True)

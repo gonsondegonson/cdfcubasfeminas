@@ -3,16 +3,17 @@ from django.core.paginator import Paginator
 
 from .functions import GetRequestId, GetObjectId
 from .forms import ContactForm
-from .models import  Club, News, Gallery
+from .models import  Club, Cover, News, Gallery
 
 def home(request):
     club = Club.objects.get(host=request.get_host())
-    news = News.objects.filter(club=club.id, preferential=True, date_publication__isnull=False)
+    covers = Cover.objects.filter(club=club.id, active=True)
+    news = News.objects.filter(club=club.id, date_publication__isnull=False, featured=True)
 
     id = GetRequestId(request)
     current = GetObjectId(id, news)
 
-    return render(request, 'home.html',  {'club': club, 'news': news, 'current': current})
+    return render(request, 'home.html',  {'club': club, 'covers': covers, 'news': news, 'current': current})
 
 def news(request):
     club = Club.objects.get(host=request.get_host())
@@ -22,7 +23,7 @@ def news(request):
     current = GetObjectId(id, news)
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(news, 3)
+    paginator = Paginator(news, 10)
     news_page = paginator.get_page(page)
 
     return render(request, 'news.html',  {'club': club, 'news': news_page, 'current': current})
@@ -55,5 +56,20 @@ def photogallery(request):
     gallery_page = paginator.get_page(page)
 
     return render(request, 'photogallery.html',  {'club': club, 'galleries': gallery_page, 'current': current})
+
+def videogallery(request):
+    club = Club.objects.get(host=request.get_host())
+    galleries = Gallery.objects.filter(club=club.id, gallery_type='VD').order_by('-date')
+
+    id = GetRequestId(request)
+    current = GetObjectId(id, galleries)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(galleries, 10)
+
+    gallery_page = paginator.get_page(page)
+
+    return render(request, 'videogallery.html',  {'club': club, 'galleries': gallery_page, 'current': current})
+#    return render(request, 'test.html',  {'club': club, 'galleries': gallery_page, 'current': current})
 
 #    raise Exception('Objeto' + str(current.id))

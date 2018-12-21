@@ -45,8 +45,13 @@ class ContactMessageAdmin(admin.ModelAdmin):
 
 admin.site.register(ContactMessage, ContactMessageAdmin)
 
+class CoverAdmin(admin.ModelAdmin):
+    list_display = ('club','image','active','href','news')
+
+admin.site.register(Cover, CoverAdmin)
+
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ('club','title','summary','preferential','date_creation','date_publication')
+    list_display = ('club','title','summary','date_creation','date_publication')
 
 admin.site.register(News, NewsAdmin)
 

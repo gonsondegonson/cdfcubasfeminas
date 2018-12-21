@@ -1,6 +1,6 @@
-<div class="mySponsors">
-    <h3><br>Nuestros Patrocinadores:<br></h3>
-    <div class="container img-thumbnail">
+<div class="container mySponsors">
+    <h5><br>Nuestros Patrocinadores:<br></h5>
+    <div class="img-thumbnail">
         {% for sponsor in club.sponsors %}
         <br><a target="mySponsors" href="{{ sponsor.href }}" data-toggle="tooltip" data-placement="left" title="{{ sponsor.title }}">
         	<img src="{{ sponsor.image }}">
