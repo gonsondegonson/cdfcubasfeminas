@@ -1,0 +1,67 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="row content">
+    <div class="col-xl-2 sidenav">
+    </div>
+    <div class="col-xl-10 text-left">
+        <div class="myTeam">
+        	<h2><center><br>{{ team.name }} - {{ team.season.name}}</center></h2>
+            <div class="img-thumbnail">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                		    <a href="{% url 'members' %}?Id={{ team.id }}" data-toggle="tooltip" title="Plantilla de {{ team.name }}  - {{ team.season.name}}">
+                			    <img style="width:100%" src="{{ team.photo.gallery.image }}{{ team.photo }}">
+                                <div class="caption">
+                                    <h3>Plantilla</h3>
+                                </div>
+                		    </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                		    <a target="{{ team.id }}" href="{{ team.url_calendar }}" data-toggle="tooltip" title="Calendario de {{ team.name }}  - {{ team.season.name}}">
+                			    <img style="width:100%" src="/static/images/Calendario.jpg">
+                                <div class="caption">
+                                    <h3>Calendario</h3>
+                                </div>
+                		    </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                		    <a target="{{ team.id }}" href="{{ team.url_results }}" data-toggle="tooltip" title="Resultados de {{ team.name }}  - {{ team.season.name}}">
+                			    <img style="width:100%" src="/static/images/Resultados.jpg">
+                                <div class="caption">
+                                    <h3>Resultados</h3>
+                                </div>
+                		    </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                		    <a target="{{ team.id }}" href="{{ team.url_classification }}" data-toggle="tooltip" title="Clasificación de {{ team.name }}  - {{ team.season.name}}">
+                			    <img style="width:100%" src="/static/images/Clasificacion.jpg">
+                                <div class="caption">
+                                    <h3>Clasificación</h3>
+                                </div>
+                		    </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                		    <a target="{{ team.id }}" href="{{ team.url_crossedtable }}" data-toggle="tooltip" title="Tabla Cruzada de {{ team.name }}  - {{ team.season.name}}">
+                			    <img style="width:100%" src="/static/images/TablaCruzada.jpg">
+                                <div class="caption">
+                                    <h3>Tabla Cruzada</h3>
+                                </div>
+                		    </a>
+                        </div>
+                    </div>
+                </div>
+        	</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

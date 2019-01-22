@@ -34,7 +34,6 @@ class Age(models.Model):
         return self.name
 
 class People(models.Model):
-    nick = models.CharField(max_length=20)
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
     birth_date = models.DateTimeField(blank=True, null=True)
@@ -68,6 +67,9 @@ class Club(models.Model):
 
     def social(self):
         return ClubSocial.objects.filter(club=self.id).select_related('social')
+
+    def teams(self):
+        return Team.objects.filter(season=Season.current().id, club=self.id)
 
     class Meta:
         indexes = [
@@ -198,14 +200,48 @@ class Team(models.Model):
     club = models.ForeignKey('Club', on_delete=models.PROTECT)
     age = models.ForeignKey('Age', on_delete=models.PROTECT)
     name = models.CharField(max_length=100)
+    photo = models.ForeignKey('GalleryObject', on_delete=models.PROTECT)
+    url_calendar = models.URLField(blank=True, null=True)
+    url_results = models.URLField(blank=True, null=True)
+    url_classification = models.URLField(blank=True, null=True)
+    url_crossedtable = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.name
+
+class TeamMember(models.Model):
+    team = models.ForeignKey('Team', on_delete=models.PROTECT)
+    rol = models.ForeignKey('Rol', on_delete=models.PROTECT)
+    people = models.ForeignKey('People', on_delete=models.PROTECT)
+    photo = models.ForeignKey('GalleryObject', on_delete=models.PROTECT)
+    nick = models.CharField(max_length=20)
+    number = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return (str(self.number) + ' - ' + self.nick)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['team', 'number']),
+        ]
 
 class Social(models.Model):
     name = models.CharField(max_length=100)
     href = models.URLField(blank=True, null=True)
     icon = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class Rol(models.Model):
+    STAFF = 'ST'
+    PLAYER = 'PL'
+    ROL_TYPE = (
+        (STAFF, 'Técnico'),
+        (PLAYER, 'Plantilla'),
+    )
+    name = models.CharField(max_length=100)
+    rol_type = models.CharField(max_length=2, choices=ROL_TYPE, default=PLAYER,)
 
     def __str__(self):
         return self.name

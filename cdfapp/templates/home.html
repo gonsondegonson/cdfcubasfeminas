@@ -38,23 +38,23 @@
 <div class="myHomeNews">
 	<div class="container">
     	<h5><br><center>Noticias destacadas:</center></h5>
-    <div class="img-thumbnail">
-        <div class="row">
-            {% for new in news %}
-            <div class="col-md-4">
-                <div class="thumbnail">
-        		    <a href="{% url 'news' %}?Id={{ new.id }}" data-toggle="tooltip" title="{{ new.title }}">
-        			    <img style="width:100%" src="{{ new.image }}">
-                        <div class="caption">
-                            <h5>{{ new.date_publication|date:'d/m/Y - H:m' }} {{ new.title }}</h5>
-                            <p>{{ new.summary }}</p>
-                        </div>
-        		    </a>
+        <div class="img-thumbnail">
+            <div class="row">
+                {% for new in news %}
+                <div class="col-md-4">
+                    <div class="thumbnail">
+            		    <a href="{% url 'news' %}?Id={{ new.id }}" data-toggle="tooltip" title="{{ new.title }}">
+            			    <img style="width:100%" src="{{ new.image }}">
+                            <div class="caption">
+                                <h5>{{ new.date_publication|date:'d/m/Y - H:m' }} {{ new.title }}</h5>
+                                <p>{{ new.summary }}</p>
+                            </div>
+            		    </a>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
-	</div>
+    	</div>
 	</div>
 </div>
 {% endblock %}

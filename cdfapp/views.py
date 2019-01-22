@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 
-from .functions import GetRequestId, GetObjectId
+from .functions import GetParameter, GetRequestId, GetObjectId
 from .forms import ContactForm
-from .models import  Club, Cover, News, Gallery
+from .models import  Season, Club, Cover, News, Team, TeamMember, Gallery, Rol
 
 def home(request):
+    season = Season.current()
     club = Club.objects.get(host=request.get_host())
     covers = Cover.objects.filter(club=club.id, active=True)
     news = News.objects.filter(club=club.id, date_publication__isnull=False, featured=True)
@@ -13,7 +14,7 @@ def home(request):
     id = GetRequestId(request)
     current = GetObjectId(id, news)
 
-    return render(request, 'home.html',  {'club': club, 'covers': covers, 'news': news, 'current': current})
+    return render(request, 'home.html',  {'season': season, 'club': club, 'covers': covers, 'news': news, 'current': current})
 
 def news(request):
     club = Club.objects.get(host=request.get_host())
@@ -27,6 +28,30 @@ def news(request):
     news_page = paginator.get_page(page)
 
     return render(request, 'news.html',  {'club': club, 'news': news_page, 'current': current})
+
+def team(request):
+    teamId = int(GetParameter(request, 'Id'))
+
+    club = Club.objects.get(host=request.get_host())
+    team = Team.objects.get(id=teamId)
+
+    return render(request, 'team.html',  {'club': club, 'team': team})
+
+def members(request):
+    teamId = int(GetParameter(request, 'Id'))
+
+    club = Club.objects.get(host=request.get_host())
+    team = Team.objects.get(id=teamId)
+    teammembers = TeamMember.objects.filter(team=teamId).order_by('number')
+
+    return render(request, 'members.html',  {'club': club, 'team': team, 'teammembers': teammembers})
+
+def member(request):
+    club = Club.objects.get(host=request.get_host())
+
+    id = GetRequestId(request)
+
+    return render(request, 'member.html',  {'club': club})
 
 def contact(request):
     club = Club.objects.get(host=request.get_host())

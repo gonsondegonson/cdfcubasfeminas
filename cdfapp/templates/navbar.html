@@ -13,12 +13,36 @@
 		<li class="nav-item ml-5"><a class="nav-link" href="#"><span class="fas fa-university"></span> Club</a></li>
 		<li class="nav-item dropdown ml-5">
 			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><span class="fas fa-futbol"> Equipos</span></a>
-			<div class="dropdown-menu">
-				<a class="dropdown-item" href="#"><span class="fas fa-users"> Plantilla</a>
-				<a class="dropdown-item" href="#"><span class="fas fa-user-graduate"> Entrenadores</a>
-				<a class="dropdown-item" href="#"><span class="fas fa-calendar-alt"> Calendario</a>
-				<a class="dropdown-item" href="#"><span class="fas fa-table"> Clasificación</a>
-			</div>
+			<ul class="nav-item dropdown-menu">
+            {% for team in club.teams %}
+    			<li class="dropdown-submenu">
+				    <a class="dropdown-item" href="{% url 'team' %}?Id={{ team.id }}"><span class="fas fa-futbol"> {{ team.name }}</a>
+    			    <ul class="dropdown-menu">
+        				<a class="dropdown-item" href="{% url 'members' %}?Id={{ team.id }}"><span class="fas fa-users"> Plantilla</a>
+        				{% if team.url_calendar == None %}
+            				<a class="dropdown-item"><span class="fas fa-calendar-alt"> Calendario</a>
+        				{% else %}
+            				<a class="dropdown-item" target="{{ team.id }}" href="{{ team.url_calendar }}"><span class="fas fa-calendar-alt"> Calendario</a>
+        				{% endif %}
+        				{% if team.url_results == None %}
+            				<a class="dropdown-item"><span class="fas fa-list-ol"> Resultados</a>
+        				{% else %}
+            				<a class="dropdown-item" target="{{ team.id }}" href="{{ team.url_results }}"><span class="fas fa-list-ol"> Resultados</a>
+        				{% endif %}
+        				{% if team.url_classification == None %}
+            				<a class="dropdown-item"><span class="fas fa-table"> Clasificación</a>
+        				{% else %}
+            				<a class="dropdown-item" target="{{ team.id }}" href="{{ team.url_classification }}"><span class="fas fa-table"> Clasificación</a>
+        				{% endif %}
+        				{% if team.url_crossedtable == None %}
+            				<a class="dropdown-item"><span class="fas fa-th"> Tabla cruzada</a>
+        				{% else %}
+            				<a class="dropdown-item" target="{{ team.id }}" href="{{ team.url_crossedtable }}"><span class="fas fa-th"> Tabla cruzada</a>
+        				{% endif %}
+        			</ul>
+    			</li>
+            {% endfor %}
+			</ul>
 		</li>
 		<li class="nav-item ml-5"><a class="nav-link" href="#"><span class="fas fa-building"></span> Instalaciones</a></li>
 		<li class="nav-item dropdown ml-5">

@@ -1,5 +1,14 @@
 from django.utils.datastructures import MultiValueDictKeyError
 
+def GetParameter(request, name):
+
+    try:
+        param = request.GET[name]
+    except MultiValueDictKeyError:
+        param = '';
+
+    return param
+
 def GetRequestId(request):
 
     try:

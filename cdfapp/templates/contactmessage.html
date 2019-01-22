@@ -12,13 +12,13 @@
                 <ul>
                 {% for social in club.social %}
                     {% if social.social.name == "Telephone" %}
-                    <li>Llamándonos al teléfono <a href="{{ social.href }}"><span class="{{ social.social.icon }}"></span><strong> {{ social.href|slice:"4:" }}</strong></a></li>
+                    <br><li>Llamándonos al teléfono <a href="{{ social.href }}"><span class="{{ social.social.icon }}"></span><strong> {{ social.href|slice:"4:" }}</strong></a></li>
                     {% endif %}
                     {% if social.social.name == "e-Mail" %}
-                    <li>Escribiéndonos un correo a la dirección <a href="{{ social.href }}"><span class="{{ social.social.icon }}"></span><strong> {{ social.href|slice:"7:" }}</strong></a></li>
+                    <br><li>Escribiéndonos un correo a la dirección <a href="{{ social.href }}"><span class="{{ social.social.icon }}"></span><strong> {{ social.href|slice:"7:" }}</strong></a></li>
                     {% endif %}
                 {% endfor %}
-                    <li>Dejándonos tus datos, en breve nosotros nos pondremos en contacto contigo: </li>
+                    <br><li>Dejándonos tus datos, en breve nosotros nos pondremos en contacto contigo:</li><br>
                 </ul>
                 <form method="post" class="post-form">{% csrf_token %}
                     {{ form.non_field_errors }}

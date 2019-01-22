@@ -70,8 +70,23 @@ class PeopleSocialInline(admin.TabularInline):
     extra = 1
 
 class PeopleAdmin(admin.ModelAdmin):
-    list_display = ('nick','name', 'surname','birth_date')
+    list_display = ('name', 'surname','birth_date')
     inlines = [PeopleSocialInline]
 
 admin.site.register(People, PeopleAdmin)
+
+class TeamMemberInline(admin.TabularInline):
+    model = TeamMember
+    extra = 1
+
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ('season','club', 'age','name')
+    inlines = [TeamMemberInline]
+
+admin.site.register(Team, TeamAdmin)
+
+class RolAdmin(admin.ModelAdmin):
+    list_display = ('name','rol_type')
+
+admin.site.register(Rol, RolAdmin)
 
