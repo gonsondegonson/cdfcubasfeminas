@@ -69,9 +69,13 @@ class PeopleSocialInline(admin.TabularInline):
     model = PeopleSocial
     extra = 1
 
+class PeoplePhotoInline(admin.TabularInline):
+    model = PeoplePhoto
+    extra = 1
+
 class PeopleAdmin(admin.ModelAdmin):
     list_display = ('name', 'surname','birth_date')
-    inlines = [PeopleSocialInline]
+    inlines = [PeopleSocialInline, PeoplePhotoInline]
 
 admin.site.register(People, PeopleAdmin)
 

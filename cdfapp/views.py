@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 
 from .functions import GetParameter, GetRequestId, GetObjectId
 from .forms import ContactForm
-from .models import  Season, Club, Cover, News, Team, TeamMember, Gallery, Rol
+from .models import  Social, Season, Club, Cover, News, Team, TeamMember, Gallery, PeopleSocial, PeoplePhoto
 
 def home(request):
     season = Season.current()
@@ -48,10 +48,22 @@ def members(request):
 
 def member(request):
     club = Club.objects.get(host=request.get_host())
+    socials= Social.objects.all()
 
     id = GetRequestId(request)
+    teammember = TeamMember.objects.get(id=id)
+    teammemberhistorics = TeamMember.objects.filter(people=teammember.people.id)
 
-    return render(request, 'member.html',  {'club': club})
+    peoplesocials = PeopleSocial.objects.filter(people=teammember.people.id)
+    for social in socials:
+        social.href = None
+        for peoplesocial in peoplesocials:
+            if peoplesocial.social.id == social.id:
+                social.href = peoplesocial.href
+
+    peoplephotos = PeoplePhoto.objects.filter(people=teammember.people.id)
+
+    return render(request, 'member.html',  {'club': club, 'teammember': teammember, 'socials': socials, 'teammemberhistorics': teammemberhistorics, 'peoplephotos': peoplephotos})
 
 def contact(request):
     club = Club.objects.get(host=request.get_host())

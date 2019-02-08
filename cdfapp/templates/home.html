@@ -41,7 +41,7 @@
         <div class="img-thumbnail">
             <div class="row">
                 {% for new in news %}
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="thumbnail">
             		    <a href="{% url 'news' %}?Id={{ new.id }}" data-toggle="tooltip" title="{{ new.title }}">
             			    <img style="width:100%" src="{{ new.image }}">

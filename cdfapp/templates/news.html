@@ -37,7 +37,14 @@
         </div>
     </div>
     <div class="col-xl-9 text-left">
-        {% include 'new.html' %}
+        <div class="myNew">
+        	<h2><br><center>{{ current.title }}</center></h2>
+        	<div class="container">
+        	    <br>
+        		<h5 class="text-justify"><strong>{{ current.summary }}</strong></h5><br>
+                <div><img style="float: left;width:200px;" src="{{ current.image }}"/> {{ current.date_publication|date:'d/m/Y - H:m' }}<br>{{ current.html_text }}</div>
+        	</div>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -41,6 +41,12 @@ class People(models.Model):
     def social(self):
         return PeopleSocial.objects.filter(people=self.id)
 
+    def current_age(self):
+        if self.birth_date == None:
+            return ''
+        else:
+            return Age.current(self.birth_date)
+
     def __str__(self):
         return self.name + ' ' + self.surname
 
@@ -51,6 +57,13 @@ class PeopleSocial(models.Model):
 
     def __str__(self):
         return self.href
+
+class PeoplePhoto(models.Model):
+    people = models.ForeignKey('People', on_delete=models.PROTECT)
+    photo = models.ForeignKey('GalleryObject', on_delete=models.PROTECT)
+
+    def __str__(self):
+        return ''
 
 class Club(models.Model):
     name = models.CharField(max_length=100)
@@ -213,7 +226,8 @@ class TeamMember(models.Model):
     team = models.ForeignKey('Team', on_delete=models.PROTECT)
     rol = models.ForeignKey('Rol', on_delete=models.PROTECT)
     people = models.ForeignKey('People', on_delete=models.PROTECT)
-    photo = models.ForeignKey('GalleryObject', on_delete=models.PROTECT)
+    photo = models.ForeignKey('GalleryObject', related_name='photo', on_delete=models.PROTECT)
+    photo_alt = models.ForeignKey('GalleryObject', related_name='photo_alt', on_delete=models.PROTECT)
     nick = models.CharField(max_length=20)
     number = models.IntegerField(blank=True, null=True)
 
@@ -224,6 +238,13 @@ class TeamMember(models.Model):
         indexes = [
             models.Index(fields=['team', 'number']),
         ]
+
+class Facility(models.Model):
+    club = models.ForeignKey('Club', on_delete=models.PROTECT)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 class Social(models.Model):
     name = models.CharField(max_length=100)

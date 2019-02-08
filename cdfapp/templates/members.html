@@ -6,14 +6,17 @@
     </div>
     <div class="col-xl-11 text-left">
         <div class="myTeam">
-        	<h3><br><center>Plantilla: {{ team.name }} - {{ team.season.name}}</center></h3>
+        	<h3><br><center>{{ team.name }} - {{ team.season.name}}</center></h3>
             <div class="img-thumbnail">
                 <div class="row">
                     {% for member in teammembers %}
                     <div class="col-md-2">
                         <div class="thumbnail">
-                		    <a href="{% url 'members' %}?Id={{ member.id }}" data-toggle="tooltip" title="{{ member.people.name }} {{ member.people.surname }}">
-                			    <img style="width:100%" src="{{ member.photo.gallery.image }}{{ member.photo.image }}">
+                		    <a href="{% url 'member' %}?Id={{ member.id }}" data-toggle="tooltip" title="{{ member.people.name }} {{ member.people.surname }}">
+                                <img style="width:100%" src="{{ member.photo.gallery.image }}{{ member.photo.image }}"
+                                     onmouseover="this.src='{{ member.photo_alt.gallery.image }}{{ member.photo_alt.image }}';"
+                                     onmouseout="this.src='{{ member.photo.gallery.image }}{{ member.photo.image }}';">
+                                </img>
                                 <div class="caption">
                                     <h6>{{ member.people.name }} {{ member.people.surname }}<br>
                     				{% if member.number > 0 %}
@@ -32,5 +35,4 @@
 	    </div>
 	</div>
 </div>
-
 {% endblock %}

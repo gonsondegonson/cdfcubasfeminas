@@ -1,0 +1,93 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="row content">
+    <div class="col-xl-1 sidenav">
+    </div>
+    <div class="col-xl-11 text-left">
+        <div class="myMember">
+            <h3><br><center>{{ teammember.team.name }} - {{ teammember.team.season.name}}</center></h3>
+            <div class="row content img-thumbnail">
+                <div class="col-xl-3 sidenav">
+                    <br>
+                    <div class="thumbnail">
+                        <img style="width:100%" src="{{ teammember.photo.gallery.image }}{{ teammember.photo.image }}"
+                             onmouseover="this.src='{{ teammember.photo_alt.gallery.image }}{{ teammember.photo_alt.image }}';"
+                             onmouseout="this.src='{{ teammember.photo.gallery.image }}{{ teammember.photo.image }}';">
+                        </img>
+                    </div>
+                    {% for social in socials %}
+                        {% if social.href == None %}
+                            <a class="btn btn-default {{ social.icon }} disabled"></a>
+                        {% else %}
+                            <a href="{{ social.href}}" data-toggle="tooltip" title="Contacta con {{ teammember.people.name }} por {{ social.name }}" target="member-social" class="btn btn-link {{ social.icon }}"></a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="col-xl-9 text-left">
+                    <br>
+                    <h2>{{ teammember.people.name}} {{ teammember.people.surname}}</h2>
+                    <br>
+                    <h4><label style="width:220px">Dorsal: </label>{% if teammember.number > 0 %}{{ teammember.number}}{% endif %}<br></h4>
+                    <h4><label style="width:220px">Alias: </label>{{ teammember.nick}}<br></h4>
+                    <h4><label style="width:220px">Posición: </label>{{ teammember.rol.name }}<br></h4>
+                    <br>
+                    <h4><label style="width:220px">Fecha de Nacimiento: </label>{{ teammember.people.birth_date|date:'d/m/Y' }}</h2>
+                    <h4><label style="width:220px">Categoría: </label>{{ teammember.people.current_age }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row content">
+    <div class="col-xl-1 sidenav">
+    </div>
+    <div class="col-xl-11 text-center">
+        <div class="myMember">
+            <h3><center>Histórico de Equipos</center></h3>
+            <div class="row content img-thumbnail">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Club</th><th>Temporada</th><th>Categoría</th><th>Equipo</th><th>Posición</th><th>Número</th><th>Alias</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for teammemberhistoric in teammemberhistorics %}
+                            <tr onClick="location.href='{% url 'members' %}?Id={{ teammemberhistoric.team.id }}';">
+                                <td>{{ teammemberhistoric.team.club.name }}</td>
+                                <td>{{ teammemberhistoric.team.season.name }}</td>
+                                <td>{{ teammemberhistoric.team.age.name }}</td>
+                                <td>{{ teammemberhistoric.team.name }}</td>
+                                <td>{{ teammemberhistoric.rol.name }}</td>
+                                <td>{{ teammemberhistoric.number }}</td>
+                                <td>{{ teammemberhistoric.nick }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row content">
+    <div class="col-xl-1 sidenav">
+    </div>
+    <div class="col-xl-11 text-left">
+        <div class="myMember">
+            <h3><br><center>Galería de Fotos</center></h3>
+            <div class="row content img-thumbnail">
+            {% for peoplephoto in peoplephotos %}
+        		<a target="myPhotoGallery" class="nav-item" href="{{ peoplephoto.photo.gallery.href }}{{ peoplephoto.photo.href }}" data-toggle="tooltip" title="{{ peoplephoto.photo.title }}">
+        			<img class="img-thumbnail" src="{{ peoplephoto.photo.gallery.image }}{{ peoplephoto.photo.image }}">
+        		</a>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{%   endblock %}
