@@ -3,10 +3,9 @@ from django.core.paginator import Paginator
 
 from .functions import GetParameter, GetRequestId, GetObjectId
 from .forms import ContactForm
-from .models import  Social, Season, Club, Cover, News, Team, TeamMember, Gallery, PeopleSocial, PeoplePhoto
+from .models import  Social, Club, Season, Cover, News, Team, TeamMember, Gallery, PeopleSocial, PeoplePhoto, Installation, InstallationImage, TeamInstallation, ClubEquipement
 
 def home(request):
-    season = Season.current()
     club = Club.objects.get(host=request.get_host())
     covers = Cover.objects.filter(club=club.id, active=True)
     news = News.objects.filter(club=club.id, date_publication__isnull=False, featured=True)
@@ -14,7 +13,7 @@ def home(request):
     id = GetRequestId(request)
     current = GetObjectId(id, news)
 
-    return render(request, 'home.html',  {'season': season, 'club': club, 'covers': covers, 'news': news, 'current': current})
+    return render(request, 'home.html',  {'club': club, 'covers': covers, 'news': news, 'current': current})
 
 def news(request):
     club = Club.objects.get(host=request.get_host())
@@ -28,6 +27,31 @@ def news(request):
     news_page = paginator.get_page(page)
 
     return render(request, 'news.html',  {'club': club, 'news': news_page, 'current': current})
+
+def installations(request):
+    club = Club.objects.get(host=request.get_host())
+
+    id = GetParameter(request, 'Id')
+    if id == None:
+        teamId = GetParameter(request, 'Team')
+        if teamId == None:
+            installations = Installation.objects.filter(club=club.id)
+            return render(request, 'installations.html',  {'club': club, 'installations': installations})
+        else:
+            team = Team.objects.get(id=int(teamId))
+            teaminstallations = TeamInstallation.objects.filter(team_id=int(teamId))
+            return render(request, 'teaminstallations.html',  {'club': club, 'team': team, 'teaminstallations': teaminstallations})
+    else:
+        installation = Installation.objects.get(id=int(id))
+        installationimages = InstallationImage.objects.filter(installation_id=int(id))
+        teamsinstallation = TeamInstallation.objects.filter(installation_id=int(id))
+        return render(request, 'installation.html',  {'club': club, 'installation': installation, 'installationimages': installationimages, 'teamsinstallation': teamsinstallation})
+
+def equipement(request):
+    club = Club.objects.get(host=request.get_host())
+    equipements = ClubEquipement.objects.filter(club=club.id, season=Season.current().id)
+
+    return render(request, 'equipement.html',  {'club': club, 'equipements': equipements})
 
 def team(request):
     teamId = int(GetParameter(request, 'Id'))
@@ -82,7 +106,15 @@ def contact(request):
 
 def photogallery(request):
     club = Club.objects.get(host=request.get_host())
-    galleries = Gallery.objects.filter(club=club.id, gallery_type='PH').order_by('-date')
+
+    active = GetParameter(request, 'Active')
+    if active == None:
+        galleries = Gallery.objects.filter(club=club.id, gallery_type='PH', active=True).order_by('-date')
+    else:
+        if active.upper() == 'FALSE':
+            galleries = Gallery.objects.filter(club=club.id, gallery_type='PH', active=False).order_by('-date')
+        else:
+            galleries = Gallery.objects.filter(club=club.id, gallery_type='PH').order_by('-date')
 
     id = GetRequestId(request)
     current = GetObjectId(id, galleries)

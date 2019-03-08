@@ -2,44 +2,50 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
-    <div class="img-thumbnail">
-    	<div id="myCarousel" class="carousel slide" data-ride="carousel">
-    		<ol class="carousel-indicators">
-                {% for cover in covers %}
-    			<li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}" {% if forloop.counter0 == 0 %} class="active"{% endif %}></li>
-                {% endfor %}
-    		</ol>
+<div class="row content">
+    <div class="col-xl-1 sidenav">
+    </div>
+    <div class="col-xl-11 text-left">
+        <div class="img-thumbnail">
+        	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+        		<ol class="carousel-indicators">
+                    {% for cover in covers %}
+        			<li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}" {% if forloop.counter0 == 0 %} class="active"{% endif %}></li>
+                    {% endfor %}
+        		</ol>
 
-    		<div class="carousel-inner">
-                {% for cover in covers %}
-    			<div {% if forloop.counter0 == 0 %}class="carousel-item active"{% else %}class="carousel-item"{% endif %}>
-    			    {% if cover.href is not blank or cover.href is not null %}
-        			    <a href="{{ cover.href }}">
-    			    {% elif cover.news.id > 0 %}
-        			    <a href="{% url 'news' %}?Id={{ cover.news.id }}">
-    			    {% endif %}
-    				<img src="{{ cover.image }}" alt="{{ cover.title }}">
-    			</div>
-                {% endfor %}
-    		</div>
-    		<a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-    			<span class="carousel-control-prev-icon"></span>
-    			<span class="sr-only">Anterior</span>
-    		</a>
-    		<a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-    			<span class="carousel-control-next-icon"></span>
-    			<span class="sr-only">Siguiente</span>
-    		</a>
-    	</div>
+        		<div class="carousel-inner">
+                    {% for cover in covers %}
+        			<div {% if forloop.counter0 == 0 %}class="carousel-item active"{% else %}class="carousel-item"{% endif %}>
+        			    {% if cover.href is not blank or cover.href is not null %}
+            			    <a href="{{ cover.href }}">
+        			    {% elif cover.news.id > 0 %}
+            			    <a href="{% url 'news' %}?Id={{ cover.news.id }}">
+        			    {% endif %}
+        				<img src="{{ cover.image }}" alt="{{ cover.title }}">
+        			</div>
+                    {% endfor %}
+        		</div>
+        		<a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+        			<span class="carousel-control-prev-icon"></span>
+        			<span class="sr-only">Anterior</span>
+        		</a>
+        		<a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+        			<span class="carousel-control-next-icon"></span>
+        			<span class="sr-only">Siguiente</span>
+        		</a>
+        	</div>
+        </div>
     </div>
 </div>
 
-<div class="myHomeNews">
-	<div class="container">
-    	<h5><br><center>Noticias destacadas:</center></h5>
-        <div class="img-thumbnail">
-            <div class="row">
+<div class="row content">
+    <div class="col-xl-1 sidenav">
+    </div>
+    <div class="col-xl-11 text-left">
+        <div class="myHomeNews">
+        	<h4><br><center>Noticias destacadas:</center></h4>
+            <div class="row img-thumbnail">
                 {% for new in news %}
                 <div class="col-md-3">
                     <div class="thumbnail">
@@ -53,8 +59,9 @@
                     </div>
                 </div>
                 {% endfor %}
-            </div>
-    	</div>
-	</div>
+        	</div>
+        </div>
+    </div>
 </div>
+
 {% endblock %}

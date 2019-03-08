@@ -1,0 +1,69 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="row content">
+    <div class="col-xl-1 sidenav">
+    </div>
+    <div class="col-xl-11 text-center">
+        <div class="myInstallations">
+        	<h3><br><center>{{ installation.title }}</center><br></h3>
+            <div class="row content img-thumbnail">
+                <div class="col-md-12 thumbnail" align="center">
+                    <h4><center>Localización:</center></h4>
+                	<iframe {{ installation.html_iframe }}></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row content">
+    <div class="col-xl-1 sidenav">
+    </div>
+    <div class="col-xl-11 text-center">
+        <div class="myInstallations">
+            <h4><br><center>Uso por Equipos:</center></h4>
+            <div class="row img-thumbnail">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Uso Instalación</th><th>Equipo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for teaminstallation in teamsinstallation %}
+                            <tr onClick="location.href='{% url 'team' %}?Id={{ teaminstallation.team.id }}';">
+                                <td>{{ teaminstallation.tittle }}</td>
+                                <td>{{ teaminstallation.team.name }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row content">
+    <div class="col-xl-1 sidenav">
+    </div>
+    <div class="col-xl-11 text-left">
+        <div class="myInstallations">
+        	<h4><br><center>Galería de Fotos:</center></h4>
+            <div class="row img-thumbnail">
+                {% for installationimage in installationimages %}
+                <div class="col-md-3">
+                    <div class="thumbnail">
+            		    <a href="{{ installationimage.image.gallery.href }}{{ installationimage.image.href }}" data-toggle="tooltip" title="{{ installationimage.image.title }}">
+            			    <img style="width:100%" src="{{ installationimage.image.gallery.image }}{{ installationimage.image.image }}">
+            		    </a>
+                    </div>
+                </div>
+                {% endfor %}
+        	</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

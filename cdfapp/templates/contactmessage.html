@@ -23,18 +23,18 @@
                 <form method="post" class="post-form">{% csrf_token %}
                     {{ form.non_field_errors }}
                     <div class="fieldWrapper">
-                        {{ form.subject.errors }}
-                        <label for="{{ form.subject.id_for_label }}" style="width:80px">Teléfono:</label>
+                        {{ form.phone.errors }}
+                        <label for="{{ form.phone.id_for_label }}" style="width:80px">Teléfono:</label>
                         {{ form.phone }}
                     </div>
                     <div class="fieldWrapper">
-                        {{ form.message.errors }}
-                        <label for="{{ form.message.id_for_label }}" style="width:80px">Correo:</label>
+                        {{ form.email.errors }}
+                        <label for="{{ form.email.id_for_label }}" style="width:80px">Correo:</label>
                         {{ form.email }}
                     </div>
                     <div class="fieldWrapper">
-                        {{ form.sender.errors }}
-                        <label for="{{ form.sender.id_for_label }}" style="width:80px">Mensaje:</label>
+                        {{ form.message.errors }}
+                        <label for="{{ form.message.id_for_label }}" style="width:80px">Mensaje:</label>
                         {{ form.message }}
                     </div>
                     <button type="submit" class="save btn btn-outline-success" data-toggle="tooltip" title="Enviar mensaje de contacto">Enviar</button>

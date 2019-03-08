@@ -7,7 +7,8 @@
 	color: black;
 }
 .navbar {
-	background-color: #C6016A;
+	background-color: #e5e0e0;
+//	background-color: #C6016A;
 }
 
 .carousel .carousel-inner .carousel-item img {
@@ -30,6 +31,12 @@
 .myTeam {
 	font-family: 'Lobster';
 }
+.myInstallations {
+	font-family: 'Lobster';
+}
+.myEquipement {
+	font-family: 'Lobster';
+}
 .myTeam h6 {
 	font-family: 'Comic Sans';
 }
@@ -43,6 +50,9 @@
 	font-family: 'Lobster';
 }
 .myPhotoGallery {
+	font-family: 'Lobster';
+}
+.myVideoGallery {
 	font-family: 'Lobster';
 }
 .myContactMessage {

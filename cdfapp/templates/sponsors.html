@@ -2,8 +2,8 @@
     <h5><br>Nuestros Patrocinadores:<br></h5>
     <div class="img-thumbnail">
         {% for sponsor in club.sponsors %}
-        <br><a target="mySponsors" href="{{ sponsor.href }}" data-toggle="tooltip" data-placement="left" title="{{ sponsor.title }}">
-        	<img class="img-thumbnail" src="{{ sponsor.image }}">
+        <br><a target="mySponsors" href="{{ sponsor.href }}" data-toggle="tooltip" data-placement="left" title="{{ sponsor.image.title }}">
+        	<img class="img-thumbnail" src="{{ sponsor.image.gallery.image }}{{ sponsor.image.image }}">
         </a><br>
         {% endfor %}
     </div>

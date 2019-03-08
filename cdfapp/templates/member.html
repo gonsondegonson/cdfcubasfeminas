@@ -45,20 +45,20 @@
     </div>
     <div class="col-xl-11 text-center">
         <div class="myMember">
-            <h3><center>Histórico de Equipos</center></h3>
+            <h3><center>Histórico de Equipos de {{ teammember.people.name }}</center></h3>
             <div class="row content img-thumbnail">
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Club</th><th>Temporada</th><th>Categoría</th><th>Equipo</th><th>Posición</th><th>Número</th><th>Alias</th>
+                                <th>Temporada</th><th>Club</th><th>Categoría</th><th>Equipo</th><th>Posición</th><th>Número</th><th>Alias</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for teammemberhistoric in teammemberhistorics %}
                             <tr onClick="location.href='{% url 'members' %}?Id={{ teammemberhistoric.team.id }}';">
-                                <td>{{ teammemberhistoric.team.club.name }}</td>
                                 <td>{{ teammemberhistoric.team.season.name }}</td>
+                                <td>{{ teammemberhistoric.team.club.name }}</td>
                                 <td>{{ teammemberhistoric.team.age.name }}</td>
                                 <td>{{ teammemberhistoric.team.name }}</td>
                                 <td>{{ teammemberhistoric.rol.name }}</td>
@@ -79,7 +79,7 @@
     </div>
     <div class="col-xl-11 text-left">
         <div class="myMember">
-            <h3><br><center>Galería de Fotos</center></h3>
+            <h3><br><center>Galería de Fotos de {{ teammember.people.name }}</center></h3>
             <div class="row content img-thumbnail">
             {% for peoplephoto in peoplephotos %}
         		<a target="myPhotoGallery" class="nav-item" href="{{ peoplephoto.photo.gallery.href }}{{ peoplephoto.photo.href }}" data-toggle="tooltip" title="{{ peoplephoto.photo.title }}">

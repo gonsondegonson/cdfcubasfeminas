@@ -69,8 +69,8 @@ class Club(models.Model):
     name = models.CharField(max_length=100)
     title = models.TextField()
     host = models.CharField(max_length=100, blank=True, null=True)
-    image = models.CharField(max_length=100)
     stylesheet = models.CharField(max_length=100)
+    photo = models.ForeignKey('GalleryObject', on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -97,6 +97,16 @@ class ClubSocial(models.Model):
 
     def __str__(self):
         return self.href
+
+class ClubEquipement(models.Model):
+    club = models.ForeignKey('Club', on_delete=models.PROTECT)
+    season = models.ForeignKey('Season', on_delete=models.PROTECT)
+    title = models.CharField(max_length=100)
+    image_front = models.ForeignKey('GalleryObject', on_delete=models.PROTECT, related_name='+')
+    image_back = models.ForeignKey('GalleryObject', on_delete=models.PROTECT, related_name='+')
+
+    def __str__(self):
+        return self.title
 
 class Cover(models.Model):
     club = models.ForeignKey('Club', on_delete=models.PROTECT)
@@ -143,8 +153,7 @@ class Sponsor(models.Model):
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
-    title = models.CharField(max_length=250)
-    image = models.CharField(max_length=100)
+    image = models.ForeignKey('GalleryObject', on_delete=models.PROTECT)
     href = models.URLField()
     index = models.IntegerField(blank=True, null=True)
 
@@ -154,6 +163,29 @@ class Sponsor(models.Model):
         for sponsor in sponsors:
             sponsor.index = random.randint(0, 1000)
         return sorted(sponsors, key=operator.attrgetter('index'))
+
+    def __str__(self):
+        return self.image.title
+
+class Installation(models.Model):
+    club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    image = models.ForeignKey('GalleryObject', on_delete=models.PROTECT)
+    iframe = models.CharField(max_length=1000)
+
+    def image_path(self):
+        return self.image.gallery.image + self.image.image
+
+    def html_iframe(self):
+        return format_html(self.iframe)
+
+    def __str__(self):
+        return self.title
+
+class InstallationImage(models.Model):
+    installation = models.ForeignKey(Installation, on_delete=models.CASCADE)
+    title = models.CharField(max_length=250, blank=True, null=True)
+    image = models.ForeignKey('GalleryObject', on_delete=models.PROTECT)
 
     def __str__(self):
         return self.title
@@ -185,6 +217,7 @@ class Gallery(models.Model):
     title = models.CharField(max_length=200)
     date = models.DateTimeField(blank=True, null=True)
     gallery_type = models.CharField(max_length=2, choices=GALLERY_TYPE, default=PHOTO,)
+    active = models.BooleanField(default=True)
     image = models.CharField(max_length=100, blank=True, null=True)
     href = models.CharField(max_length=100, blank=True, null=True)
 
@@ -202,11 +235,20 @@ class Gallery(models.Model):
 class GalleryObject(models.Model):
     gallery = models.ForeignKey('Gallery', on_delete=models.PROTECT)
     title = models.CharField(max_length=250, blank=True, null=True)
-    image = models.CharField(max_length=100)
-    href = models.CharField(max_length=100)
+    image = models.CharField(max_length=100, blank=True, null=True)
+    href = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.image
+        if self.title != None:
+            return self.title
+        else:
+            if self.image != None:
+                return self.image
+            else:
+                if self.href != None:
+                    return self.href
+                else:
+                    return ''
 
 class Team(models.Model):
     season = models.ForeignKey('Season', on_delete=models.PROTECT)
@@ -238,6 +280,14 @@ class TeamMember(models.Model):
         indexes = [
             models.Index(fields=['team', 'number']),
         ]
+
+class TeamInstallation(models.Model):
+    team = models.ForeignKey('Team', on_delete=models.PROTECT)
+    installation = models.ForeignKey('Installation', on_delete=models.PROTECT)
+    title = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
 
 class Facility(models.Model):
     club = models.ForeignKey('Club', on_delete=models.PROTECT)

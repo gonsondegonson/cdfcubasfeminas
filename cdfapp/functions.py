@@ -5,7 +5,7 @@ def GetParameter(request, name):
     try:
         param = request.GET[name]
     except MultiValueDictKeyError:
-        param = '';
+        param = None;
 
     return param
 

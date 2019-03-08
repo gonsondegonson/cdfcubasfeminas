@@ -1,0 +1,26 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="row content">
+    <div class="col-xl-1 sidenav">
+    </div>
+    <div class="col-xl-11 text-left">
+        <div class="myTeam">
+        	<h3><br><center>Instalaciones {{ team.name }} - {{ team.season.name}}</center><br></h3>
+            <div class="row img-thumbnail">
+                {% for teaminstallation in teaminstallations %}
+                <div class="col-md-6 thumbnail" align="center">
+        		    <a href="{% url 'installations' %}?Id={{ teaminstallation.installation.id }}" data-toggle="tooltip" title="{{ teaminstallation.installation.image.title }}">
+                        <div class="caption">
+                            <h5>{{ teaminstallation.title }}:</h5>
+                            <h5>{{ teaminstallation.installation.title }}</h5>
+                        </div>
+        			    <img class="img-thumbnail" src="{{ teaminstallation.installation.image_path }}">
+        		    </a>
+                </div>
+                {% endfor %}
+        	</div>
+	    </div>
+	</div>
+</div>
+{% endblock %}

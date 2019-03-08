@@ -1,0 +1,30 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="row content">
+    <div class="col-xl-1 sidenav">
+    </div>
+    <div class="col-xl-11 text-left">
+        <div class="myEquipement">
+            <br>
+        	<h2><center>Equipación de {{ club.name }}</center></h2>
+            {% for equipement in equipements %}
+        	<h3><center>{{ equipement.title }}:</center></h3>
+            <div class="row img-thumbnail">
+                <div class="col-md-6 thumbnail" align="center">
+            		<a target="myEquipement" class="nav-item" href="{{ equipement.image_front.href }}" data-toggle="tooltip" title="{{ equipement.image_front.title }}">
+            			<img class="img-thumbnail" src="{{ equipement.image_front.gallery.image }}{{ equipement.image_front.image }}">
+            		</a>
+                </div>
+                <div class="col-md-6 thumbnail" align="center">
+            		<a target="myEquipement" class="nav-item" href="{{ equipement.image_back.href }}" data-toggle="tooltip" title="{{ equipement.image_back.title }}">
+            			<img class="img-thumbnail" src="{{ equipement.image_back.gallery.image }}{{ equipement.image_back.image }}">
+            		</a>
+                </div>
+            </div>
+            <br>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

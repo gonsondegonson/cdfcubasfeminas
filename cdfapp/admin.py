@@ -20,8 +20,11 @@ admin.site.register(Season, SeasonAdmin)
 class ClubSocialInline(admin.TabularInline):
     model = ClubSocial
     extra = 1
-class SponsorInline(admin.TabularInline):
+class ClubSponsorInline(admin.TabularInline):
     model = Sponsor
+    extra = 1
+class ClubEquipementInline(admin.TabularInline):
+    model = ClubEquipement
     extra = 1
 
 class ClubAdmin(admin.ModelAdmin):
@@ -29,16 +32,11 @@ class ClubAdmin(admin.ModelAdmin):
     list_display = ('host','name', 'title')
     fieldsets = [
         (None,      {'fields': ['name', 'title','host']}),
-        ('Estilo',  {'fields': ['image', 'stylesheet']}),
+        ('Estilo',  {'fields': ['photo', 'stylesheet']}),
     ]
-    inlines = [ClubSocialInline, SponsorInline]
+    inlines = [ClubSocialInline, ClubSponsorInline, ClubEquipementInline]
 
 admin.site.register(Club, ClubAdmin)
-
-class SponsorAdmin(admin.ModelAdmin):
-    list_display = ('club','title', 'image', 'href')
-
-admin.site.register(Sponsor, SponsorAdmin)
 
 class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ('club','request_date', 'response_date', 'phone', 'email', 'message')
@@ -65,6 +63,16 @@ class GalleryAdmin(admin.ModelAdmin):
 
 admin.site.register(Gallery, GalleryAdmin)
 
+class InstallationImageInline(admin.TabularInline):
+    model = InstallationImage
+    extra = 1
+
+class InstallationAdmin(admin.ModelAdmin):
+    list_display = ('club','title','image','iframe')
+    inlines = [InstallationImageInline]
+
+admin.site.register(Installation, InstallationAdmin)
+
 class PeopleSocialInline(admin.TabularInline):
     model = PeopleSocial
     extra = 1
@@ -83,9 +91,13 @@ class TeamMemberInline(admin.TabularInline):
     model = TeamMember
     extra = 1
 
+class TeamInstallationInline(admin.TabularInline):
+    model = TeamInstallation
+    extra = 1
+
 class TeamAdmin(admin.ModelAdmin):
     list_display = ('season','club', 'age','name')
-    inlines = [TeamMemberInline]
+    inlines = [TeamInstallationInline,TeamMemberInline]
 
 admin.site.register(Team, TeamAdmin)
 

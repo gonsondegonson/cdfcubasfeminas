@@ -40,7 +40,9 @@
         	<h3><br><center>{{ current.date|date:'d/m/Y' }} - {{ current.title }}:</center></h3>
         	<div class="container">
             {% for object in current.galleryobjects %}
-        		<a target="myPhotoGallery" class="nav-item" href="{{ current.href }}{{ object.href }}" data-toggle="tooltip" title="{{ object.title }}">
+        		<a target="myPhotoGallery" class="nav-item"
+        		    {% if object.href != None %} href="{{ current.href }}{{ object.href }}"{% endif %}
+        		    {% if object.title != None %} data-toggle="tooltip" title="{{ object.title }}"{% endif %}>
         			<img class="img-thumbnail" src="{{ current.image }}{{ object.image }}">
         		</a>
             {% endfor %}

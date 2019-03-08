@@ -36,7 +36,10 @@ Iconos:
     <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp" class="fab fa-youtube fa-3x social"></i></a>
     <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fas fa-envelope fa-3x social"></i></a>
 
-
+Google Maps:
+-------------
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d675.3608225572146!2d-3.871591547541872!3d40.203323644011895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd41f2f8aeb54843%3A0xcba36b6680f0c9b2!2sPolideportivo+Adolfo+Su%C3%A1rez!5e1!3m2!1ses!2ses!4v1551698037808" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d679.1626500687291!2d-3.7762928185379234!3d40.18342669753035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd41f5c9a526727d%3A0xde9171f8cad543df!2sPolideportivo+JOSE+FERNANDEZ+SEGOVIA+Torrejon+De+Velasco!5e1!3m2!1ses!2ses!4v1551698200744" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 
 GitHub:
 --------
@@ -55,7 +58,7 @@ vi .gitignore
 git status
 git add --all .
 git status
-git commit -m "Cambie el HTML para la página."
+git commit -m "Cambios hasta 2019/08/02"
 git push
 
 git remote add origin https://github.com/gonsondegonson/cdfcubasfeminas.git
