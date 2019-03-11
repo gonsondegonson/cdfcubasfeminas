@@ -34,7 +34,7 @@
                         <tbody>
                             {% for teaminstallation in teamsinstallation %}
                             <tr onClick="location.href='{% url 'team' %}?Id={{ teaminstallation.team.id }}';">
-                                <td>{{ teaminstallation.tittle }}</td>
+                                <td>{{ teaminstallation.title }}</td>
                                 <td>{{ teaminstallation.team.name }}</td>
                             </tr>
                             {% endfor %}

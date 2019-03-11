@@ -184,11 +184,10 @@ class Installation(models.Model):
 
 class InstallationImage(models.Model):
     installation = models.ForeignKey(Installation, on_delete=models.CASCADE)
-    title = models.CharField(max_length=250, blank=True, null=True)
     image = models.ForeignKey('GalleryObject', on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.title
+        return self.image.title
 
 class ContactMessage(models.Model):
     club = models.ForeignKey(Club, on_delete=models.CASCADE)

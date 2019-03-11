@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
 	url(r'^$', views.home),
+	url(r'^google116a2281a3dd79be.html/$', views.google, name='google'),
 	url(r'^noticias/$', views.news, name='news'),
 	url(r'^contacto/$', views.contact, name='contact'),
 	url(r'^equipo/$', views.team, name='team'),

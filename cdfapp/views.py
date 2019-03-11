@@ -5,6 +5,10 @@ from .functions import GetParameter, GetRequestId, GetObjectId
 from .forms import ContactForm
 from .models import  Social, Club, Season, Cover, News, Team, TeamMember, Gallery, PeopleSocial, PeoplePhoto, Installation, InstallationImage, TeamInstallation, ClubEquipement
 
+def google(request):
+
+    return render(request, 'google116a2281a3dd79be.html')
+
 def home(request):
     club = Club.objects.get(host=request.get_host())
     covers = Cover.objects.filter(club=club.id, active=True)
