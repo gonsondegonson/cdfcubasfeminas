@@ -63,6 +63,16 @@ class GalleryAdmin(admin.ModelAdmin):
 
 admin.site.register(Gallery, GalleryAdmin)
 
+class PeoplePhotoInline(admin.TabularInline):
+    model = PeoplePhoto
+    extra = 1
+
+class GalleryObjectAdmin(admin.ModelAdmin):
+    list_display = ('gallery', 'title','image', 'href')
+    inlines = [PeoplePhotoInline]
+
+admin.site.register(GalleryObject, GalleryObjectAdmin)
+
 class InstallationImageInline(admin.TabularInline):
     model = InstallationImage
     extra = 1
