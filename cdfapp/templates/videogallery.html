@@ -10,7 +10,7 @@
                 {% if gallery.id == current.id %}
             		<a>{{ gallery.date|date:'d/m/Y' }} - {{ gallery.title }}</a><br>
                 {% else %}
-            		<a href="{% url 'photogallery' %}?page={{ galleries.number }}&Id={{ gallery.id }}">{{ gallery.date|date:'d/m/Y' }} - {{ gallery.title }}</a><br>
+            		<a href="{% url 'videogallery' %}?page={{ galleries.number }}&Id={{ gallery.id }}">{{ gallery.date|date:'d/m/Y' }} - {{ gallery.title }}</a><br>
                 {% endif %}
             {% endfor %}
             </div>
